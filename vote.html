@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>费用核算投票</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <table class="table">
+        <tr>
+            <td colspan="3" style="width:60%">
+                <p id="subject"></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width:60%">
+                <img id="imgc" src="" onerror="change()">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="赞成" class="btn btn-secondary btn-lg" id="support" /></td>
+            <td><input type="button" value="反对" class="btn btn-secondary btn-lg" id="reject" /></td>
+            <td><input type="button" value="弃权" class="btn btn-secondary btn-lg" id="giveup" /></td>
+        </tr>
+    </table>
+
+
+
+
+    <script>
+
+        function getUrlParam(name) {
+            //构造一个含有目标参数的正则表达式对象
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            //匹配目标参数
+            var r = window.location.search.substr(1).match(reg);
+            //返回参数值
+            if (r != null) {
+                return decodeURI(r[2]);
+            }
+            return null;
+        }
+
+        var index = getUrlParam('index');
+        var title = getUrlParam('title');
+
+        document.getElementById("subject").innerHTML = title;
+
+        document.getElementById("imgc").src = title + ".jpg"
+
+
+        document.getElementById("support").addEventListener("click", function () {
+            //支持
+            connect("support", index)
+        })
+        document.getElementById("reject").addEventListener("click", function () {
+            //反对
+            connect("reject", index)
+        })
+        document.getElementById("giveup").addEventListener("click", function () {
+            //弃权
+            connect("giveup", index)
+        })
+
+        function connect(f, c) {
+            $.post("http://45.77.37.186/vote.php", { prof: f, index: c }, function (e) {
+                console.log(e)
+                if (e == "succeed") {
+                    end();
+                }
+            })
+        }
+
+        function end() {
+            console.log("gg");
+            document.getElementById("support").style.display = "none";
+            document.getElementById("reject").style.display = "none";
+            document.getElementById("giveup").style.display = "none";
+            document.getElementById("subject").innerHTML = "thank you";
+        }
+    </script>
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

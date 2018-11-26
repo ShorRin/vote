@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test get</title>
+</head>
+<body>
+    <p id="gg"></p>
+</body>
+<script>
+    function getUrlParam(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r != null){
+            return decodeURI(r[2]);
+        }
+        return null;
+    }
+
+    var index = getUrlParam('index');
+    var title = getUrlParam('title');
+
+    document.getElementById("gg").innerHTML = index + title;
+</script>
+</html>
