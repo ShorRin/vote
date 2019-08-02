@@ -67,6 +67,7 @@
         })
 
         function connect(f, c) {
+            //ip地址
             $.post("http://45.77.37.186/vote.php", { prof: f, index: c }, function (e) {
                 console.log(e)
                 if (e == "succeed") {
