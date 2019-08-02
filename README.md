@@ -1,2 +1,2 @@
 # vote
-simple stuipd useless vote server online
+simple stuipd useless vote server
